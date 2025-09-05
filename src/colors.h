@@ -24,7 +24,10 @@ enum SyntaxColor {
   Comment,
   RegisterValue,
   Highlight,
-  InstructionHighlight
+  InstructionHighlight,
+  EditorSidebar,
+  EditorSidebarText,
+  ProgramSidebar
 };
 
 inline bool isDarkTheme() {
@@ -47,6 +50,12 @@ inline QColor getSyntaxColorLight(SyntaxColor c) {
         return QColor("#FDB515");
       case SyntaxColor::InstructionHighlight:
         return QColorConstants::Red.lighter(120);
+      case SyntaxColor::EditorSidebar:
+        return QColorConstants::LightGray.lighter(120);
+      case SyntaxColor::EditorSidebarText:
+        return QColorConstants::Gray.darker(130);
+      case SyntaxColor::ProgramSidebar:
+        return QColor{0x3B, 0x7E, 0xA1};
       default:
         return QColor("#3B7EA1");
   }
@@ -68,6 +77,11 @@ inline QColor getSyntaxColorDark(SyntaxColor c) {
         return QColor("#671209");
       case SyntaxColor::InstructionHighlight:
         return QColorConstants::Red.lighter(120);
+      case SyntaxColor::EditorSidebar:
+      case SyntaxColor::ProgramSidebar:
+        return QColor("#25282c");
+      case SyntaxColor::EditorSidebarText:
+        return QColorConstants::LightGray.lighter(120);
       default:
         return QColor("#3B7EA1");
   }

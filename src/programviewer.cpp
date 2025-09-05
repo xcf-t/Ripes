@@ -132,12 +132,13 @@ void ProgramViewer::breakpointAreaPaintEvent(QPaintEvent *event) {
   // with a height of a line in the edit. We override this paint event by always
   // redrawing the visible breakpoint area
   auto area = m_breakpointArea->rect();
-  QLinearGradient gradient =
+  /*QLinearGradient gradient =
       QLinearGradient(area.topLeft(), area.bottomRight());
   gradient.setColorAt(0, Colors::FoundersRock.lighter(120));
-  gradient.setColorAt(1, Colors::FoundersRock);
+  gradient.setColorAt(1, Colors::FoundersRock);*/
+  QColor color = Ripes::Colors::getSyntaxColor(Ripes::Colors::SyntaxColor::ProgramSidebar);
 
-  painter.fillRect(area, gradient);
+  painter.fillRect(area, color);
 
   QTextBlock block = firstVisibleBlock();
   if (block.isValid()) {
