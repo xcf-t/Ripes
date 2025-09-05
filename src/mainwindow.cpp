@@ -255,10 +255,10 @@ MainWindow::~MainWindow() { delete m_ui; }
 void MainWindow::setupExamplesMenu(QMenu *parent) {
   const auto assemblyExamples =
       QDir(":/examples/assembly/").entryList(QDir::Files);
-  auto *assemblyMenu = parent->addMenu("Assembly");
+  //auto *assemblyMenu = parent->addMenu("Assembly");
   if (!assemblyExamples.isEmpty()) {
     for (const auto &fileName : assemblyExamples) {
-      assemblyMenu->addAction(fileName, this, [this, fileName] {
+      parent->addAction(fileName, this, [this, fileName] {
         LoadFileParams parms;
         parms.filepath = QString(":/examples/assembly/") + fileName;
         parms.type = SourceType::Assembly;
@@ -269,7 +269,7 @@ void MainWindow::setupExamplesMenu(QMenu *parent) {
     }
   }
 
-  const auto cExamples = QDir(":/examples/C/").entryList(QDir::Files);
+  /*const auto cExamples = QDir(":/examples/C/").entryList(QDir::Files);
   auto *cMenu = parent->addMenu("C");
   if (!cExamples.isEmpty()) {
     for (const auto &fileName : cExamples) {
@@ -308,7 +308,7 @@ void MainWindow::setupExamplesMenu(QMenu *parent) {
         tmpELFFile->remove();
       });
     }
-  }
+  }*/
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
