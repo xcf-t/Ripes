@@ -23,7 +23,8 @@ enum SyntaxColor {
   String,
   Comment,
   RegisterValue,
-  Highlight
+  Highlight,
+  InstructionHighlight
 };
 
 inline bool isDarkTheme() {
@@ -44,6 +45,8 @@ inline QColor getSyntaxColorLight(SyntaxColor c) {
         return QColor("#C4820E");
       case SyntaxColor::Highlight:
         return QColor("#FDB515");
+      case SyntaxColor::InstructionHighlight:
+        return QColorConstants::Red.lighter(120);
       default:
         return QColor("#3B7EA1");
   }
@@ -63,6 +66,8 @@ inline QColor getSyntaxColorDark(SyntaxColor c) {
         return QColor("#eea830");
       case SyntaxColor::Highlight:
         return QColor("#671209");
+      case SyntaxColor::InstructionHighlight:
+        return QColorConstants::Red.lighter(120);
       default:
         return QColor("#3B7EA1");
   }
