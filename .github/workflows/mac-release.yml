@@ -1,8 +1,5 @@
 name: Mac / Qt 6.5.0
-on:
-  workflow_run:
-    workflows: ["Release setup"]
-    types: [completed]
+on: workflow_dispatch
 
 jobs:
   buildMac:
