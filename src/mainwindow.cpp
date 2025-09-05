@@ -19,6 +19,8 @@
 
 #include "fancytabbar/fancytabbar.h"
 
+#include "colors.h"
+
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QFileDialog>
@@ -373,9 +375,32 @@ void MainWindow::wiki() {
 }
 
 void MainWindow::version() {
-  QMessageBox aboutDialog(this);
-  aboutDialog.setText("Ripes version: " + getRipesVersion());
-  aboutDialog.exec();
+  QDialog dialog(this);
+  QVBoxLayout layout;
+  QLabel imageLabel;
+  QLabel textLabel("Custom Ripes build by the Computer Architecture team @ RUB");
+  QLabel versionLabel("Ripes version: " + getRipesVersion());
+  QPushButton okButton("OK");
+  
+  QPixmap pixmap;
+  if (Ripes::Colors::isDarkTheme()) {
+    pixmap.load(":/icons/kaiuwe_light.png");
+  } else {
+    pixmap.load(":/icons/kaiuwe.png");
+  }
+  
+  imageLabel.setPixmap(pixmap.scaled(128, 256, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+  imageLabel.setAlignment(Qt::AlignCenter);
+
+  layout.addWidget(&imageLabel);
+  layout.addWidget(&textLabel);
+  layout.addWidget(&versionLabel);
+  layout.addWidget(&okButton);
+
+  QObject::connect(&okButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+
+  dialog.setLayout(&layout);
+  dialog.exec();
 }
 
 static bool writeTextFile(QFile &file, const QString &data) {

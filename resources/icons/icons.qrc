@@ -39,5 +39,7 @@
         <file>tile.svg</file>
         <file>crosshair_blue.svg</file>
         <file>crosshair_gold.svg</file>
+        <file>kaiuwe.png</file>
+        <file>kaiuwe_light.png</file>
     </qresource>
 </RCC>
