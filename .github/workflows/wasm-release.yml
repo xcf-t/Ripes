@@ -1,8 +1,5 @@
 name: WASM / Qt 6.6.0
-on:
-  push:
-    branches:
-      - '**'
+on: workflow_dispatch
 
 jobs:
   buildUbuntu:
