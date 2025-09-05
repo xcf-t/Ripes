@@ -11,7 +11,7 @@ RVSyntaxHighlighter::RVSyntaxHighlighter(
   HighlightingRule rule;
 
   // General registers
-  registerFormat.setForeground(QColor{0x80, 0x00, 0x00});
+  registerFormat.setForeground(Ripes::Colors::getSyntaxColor(Ripes::Colors::SyntaxColor::Register));
   rule.pattern = QRegularExpression("\\b[(a|s|t|x)][0-9]{1,2}");
   rule.format = registerFormat;
   m_highlightingRules.append(rule);
@@ -31,7 +31,7 @@ RVSyntaxHighlighter::RVSyntaxHighlighter(
   }
 
   // Instructions
-  instructionFormat.setForeground(Colors::BerkeleyBlue);
+  instructionFormat.setForeground(Ripes::Colors::getSyntaxColor(Ripes::Colors::SyntaxColor::Instruction));
   for (const auto &pattern : supportedOpcodes) {
     const QString regexPattern = "\\b" + pattern + "\\b";
     rule.pattern = QRegularExpression(regexPattern);
@@ -40,13 +40,13 @@ RVSyntaxHighlighter::RVSyntaxHighlighter(
   }
 
   // Labels
-  labelFormat.setForeground(Colors::Medalist);
+  labelFormat.setForeground(Ripes::Colors::getSyntaxColor(Ripes::Colors::SyntaxColor::Label));
   rule.pattern = QRegularExpression(R"([\S]+:)");
   rule.format = labelFormat;
   m_highlightingRules.append(rule);
 
   // Immediates
-  immediateFormat.setForeground(QColorConstants::DarkGreen);
+  immediateFormat.setForeground(Ripes::Colors::getSyntaxColor(Ripes::Colors::SyntaxColor::Immediate));
   rule.pattern = QRegularExpression("\\b(?<![A-Za-z])[-+]?\\d+");
   rule.format = immediateFormat;
   m_highlightingRules.append(rule);
@@ -57,13 +57,13 @@ RVSyntaxHighlighter::RVSyntaxHighlighter(
   m_highlightingRules.append(rule);
 
   // Strings
-  stringFormat.setForeground(QColor{0x80, 0x00, 0x00});
+  stringFormat.setForeground(Ripes::Colors::getSyntaxColor(Ripes::Colors::SyntaxColor::String));
   rule.pattern = QRegularExpression(R"("(?:[^"]|\.)*")");
   rule.format = stringFormat;
   m_highlightingRules.append(rule);
 
   // Comments
-  commentFormat.setForeground(Colors::Medalist);
+  commentFormat.setForeground(Ripes::Colors::getSyntaxColor(Ripes::Colors::SyntaxColor::Comment));
   rule.pattern = QRegularExpression("[#]+.*");
   rule.format = commentFormat;
   m_highlightingRules.append(rule);

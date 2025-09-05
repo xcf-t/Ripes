@@ -4,6 +4,7 @@
 
 #include "STLExtras.h"
 #include "fonts.h"
+#include "colors.h"
 #include "processorhandler.h"
 
 namespace Ripes {
@@ -91,7 +92,7 @@ QVariant RegisterModel::data(const QModelIndex &index, int role) const {
     return tooltipData(idx);
   } else if (role == Qt::BackgroundRole &&
              index.row() == m_mostRecentlyModifiedReg) {
-    return QBrush(QColor{0xFD, 0xB5, 0x15});
+    return QBrush(Ripes::Colors::getSyntaxColor(Ripes::Colors::SyntaxColor::Highlight));
   }
 
   switch (index.column()) {
@@ -116,7 +117,7 @@ QVariant RegisterModel::data(const QModelIndex &index, int role) const {
     case Qt::FontRole:
       return QFont(Fonts::monospace, 11);
     case Qt::ForegroundRole:
-      return QBrush(Qt::blue);
+      return QBrush(Ripes::Colors::getSyntaxColor(Ripes::Colors::SyntaxColor::RegisterValue));
     case Qt::EditRole:
       return QVariant::fromValue(registerData(idx));
     default:

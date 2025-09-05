@@ -96,7 +96,10 @@ MainWindow::MainWindow(QWidget *parent)
   m_ui->tabbar->addFancyTab(QIcon(":/icons/cpu.svg"), "Processor");
   m_ui->tabbar->addFancyTab(QIcon(":/icons/server.svg"), "Cache");
   m_ui->tabbar->addFancyTab(QIcon(":/icons/ram-memory.svg"), "Memory");
-  m_ui->tabbar->addFancyTab(QIcon(":/icons/led.svg"), "I/O");
+
+  // DESC: I/O is not relevant for our lecture right now.
+  //m_ui->tabbar->addFancyTab(QIcon(":/icons/led.svg"), "I/O");
+
   connect(m_ui->tabbar, &FancyTabBar::activeIndexChanged, this,
           &MainWindow::tabChanged);
   connect(m_ui->tabbar, &FancyTabBar::activeIndexChanged, m_stackedTabs,
@@ -129,7 +132,10 @@ MainWindow::MainWindow(QWidget *parent)
 
   connect(this, &MainWindow::prepareSave, editTab, &EditTab::onSave);
 
-  m_currentTabID = ProcessorTabID;
+  // DESC: Students mainly need the Editor window, so we mark it as default.
+  //m_currentTabID = ProcessorTabID;
+  m_currentTabID = EditTabID;
+
   m_ui->tabbar->setActiveIndex(m_currentTabID);
 }
 

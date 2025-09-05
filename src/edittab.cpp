@@ -89,6 +89,22 @@ EditTab::EditTab(QToolBar *toolbar, QWidget *parent)
   // C compiler is not yet supported on WASM.
   disableIfWasm(m_ui->setCInput);
 
+  // DESC: We hide the switch for C/Assembly because we only need assembly.
+  QSizePolicy sp_retain = m_ui->label_6->sizePolicy();
+  sp_retain.setRetainSizeWhenHidden(true);
+  m_ui->label_6->setSizePolicy(sp_retain);
+  m_ui->label_6->hide();
+
+  sp_retain = m_ui->setAssemblyInput->sizePolicy();
+  sp_retain.setRetainSizeWhenHidden(true);
+  m_ui->setAssemblyInput->setSizePolicy(sp_retain);
+  m_ui->setAssemblyInput->hide();
+
+  sp_retain = m_ui->setCInput->sizePolicy();
+  sp_retain.setRetainSizeWhenHidden(true);
+  m_ui->setCInput->setSizePolicy(sp_retain);
+  m_ui->setCInput->hide();
+
   // Ensure that changes to the current compiler path will disable C input, if
   // the compiler is invalid
   connect(&CCManager::get(), &CCManager::ccChanged, this, [this](auto res) {
