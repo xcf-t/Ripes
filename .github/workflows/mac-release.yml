@@ -49,6 +49,7 @@ jobs:
         sh .github/workflows/scripts/svg2icns.sh resources/icons/logo.svg
         mv logo.icns Ripes.app/Contents/Resources
         plutil -replace CFBundleIconFile -string logo.icns Ripes.app/Contents/Info.plist
+        plutil -replace CFBundleIdentifier -string com.colon-three.ext.ripes Ripes.app/Contents/Info.plist
         source .github/workflows/scripts/set_version.sh
         export APPNAME=Ripes-${RIPES_VERSION}-mac-universal2
         echo "APPNAME=${APPNAME}" >> $GITHUB_ENV
