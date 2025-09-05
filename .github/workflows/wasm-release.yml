@@ -96,11 +96,3 @@ jobs:
           Ripes.js
           Ripes.worker.js
           qtloader.js
-
-    # Dispatch the publish.yml workflow over at mortbopet.github.io
-    - name: Publish to GitHub Pages
-      run: |
-        gh workflow run publish.yml -R mortbopet/mortbopet.github.io --ref master
-      if: github.repository == 'mortbopet/Ripes' && github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
-      env:
-        GH_TOKEN: ${{ secrets.MORTBOPET_GITHUB_IO_TOKEN }}
