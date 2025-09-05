@@ -7,7 +7,7 @@ jobs:
 
     strategy:
       matrix:
-        build-type: [Release, Debug]
+        build-type: [Release]
 
     steps:
     - name: checkout sources
