@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/examples">
+        <file>assembly/random.s</file>
         <file>assembly/parity.s</file>
+        <file>assembly/factorial.s</file>
     </qresource>
 </RCC>
