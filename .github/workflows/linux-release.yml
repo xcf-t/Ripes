@@ -1,8 +1,6 @@
-name: Ubuntu 22.04 / Qt 6.5.0
-on:
-  workflow_run:
-    workflows: ["Release setup"]
-    types: [completed]
+name: Ubuntu 22.04 / Qt 6.9.0
+
+on: workflow_dispatch
 
 jobs:
   buildUbuntu:
@@ -38,7 +36,7 @@ jobs:
       with:
         aqtversion: '==3.1.*'
         py7zrversion: '>=0.20.2'
-        version: '6.5.0'
+        version: '6.9.0'
         host: 'linux'
         target: 'desktop'
         arch: 'gcc_64'
