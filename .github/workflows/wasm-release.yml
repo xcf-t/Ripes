@@ -75,7 +75,7 @@ jobs:
       run: |
         echo "building desktop"
         source emsdk/emsdk_env.sh
-        export QT_HOST_PATH=$(pwd)/../Qt/6.10.0/linux_gcc_64/
+        export QT_HOST_PATH=$(pwd)/../Qt/6.10.0/gcc_64/
         find ${QT_HOST_PATH}
         cmake                                           \
           -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}   \
