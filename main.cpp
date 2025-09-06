@@ -99,7 +99,7 @@ int guiMode(QApplication &app) {
   QTimer::singleShot(100, &m, [&m] { m.fitToView(); });
 
 #ifdef Q_OS_WINDOWS
-  if (QSysInfo::productVersion() == "10" && Ripes::Colors::isDarkTheme()) setForceDarkTheme(app);
+  if (Ripes::Colors::isDarkTheme()) setForceDarkTheme(app);
 #endif
 
   return app.exec();
