@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        build-type: [Release, Debug]
+        build-type: [Release]
 
     steps:
     - name: get container ready for build
