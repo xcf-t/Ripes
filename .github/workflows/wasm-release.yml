@@ -1,4 +1,4 @@
-name: WASM / Qt 6.9.0
+name: WASM / Qt 6.10.0
 on: workflow_dispatch
 
 jobs:
@@ -75,15 +75,15 @@ jobs:
       run: |
         echo "building desktop"
         source emsdk/emsdk_env.sh
-        export QT_HOST_PATH=$(pwd)/../Qt/6.6.0/gcc_64/
+        export QT_HOST_PATH=$(pwd)/../Qt/6.10.0/linux_gcc_64/
         find ${QT_HOST_PATH}
         cmake                                           \
           -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}   \
           -DRIPES_WITH_QPROCESS=OFF                     \
           -DEMSCRIPTEN=1                                \
           -DQT_HOST_PATH="${QT_HOST_PATH}"              \
-          -DCMAKE_TOOLCHAIN_FILE=$(pwd)/../Qt/6.6.0/wasm_multithread/lib/cmake/Qt6/qt.toolchain.cmake \
-          -DCMAKE_PREFIX_PATH=$(pwd)/../Qt/6.6.0/wasm_multithread/ \
+          -DCMAKE_TOOLCHAIN_FILE=$(pwd)/../Qt/6.10.0/wasm_multithread/lib/cmake/Qt6/qt.toolchain.cmake \
+          -DCMAKE_PREFIX_PATH=$(pwd)/../Qt/6.10.0/wasm_multithread/ \
           -DEMSCRIPTEN_FORCE_COMPILERS=ON \
           .
         make -j $(nproc)
