@@ -1,4 +1,4 @@
-name: Mac / Qt 6.9.0
+name: Mac / Qt 6.10.0
 on: workflow_dispatch
 
 jobs:
@@ -20,11 +20,11 @@ jobs:
       run: brew install autoconf automake libtool xz  pkg-config libgit2 libjpg libpng libmtp svg2png
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v3
+      uses: jurplel/install-qt-action@v4
       with:
-        aqtversion: '==3.1.*'
+        aqtversion: '==3.3.*'
         py7zrversion: '>=0.20.2'
-        version: '6.9.0'
+        version: '6.10.0'
         host: 'mac'
         target: 'desktop'
         arch: 'clang_64'
@@ -32,7 +32,7 @@ jobs:
 
     - name: build Ripes
       run: |
-        export QT_ROOT=${GITHUB_WORKSPACE}/Qt/5.13.0/clang_64
+        export QT_ROOT=${GITHUB_WORKSPACE}/Qt/6.10.0/clang_64
         export QT_QPA_PLATFORM_PLUGIN_PATH=$QT_ROOT/plugins
         export PATH=$QT_ROOT/bin:$PATH
         export CMAKE_PREFIX_PATH=$QT_ROOT/lib/cmake
@@ -61,22 +61,4 @@ jobs:
       with:
         name: ${{ matrix.build-type }}_executable
         path: ${{ env.APPNAME }}.zip
-
-    - name: continuous release
-      uses: softprops/action-gh-release@v1
-      if: github.ref == 'refs/heads/master' && matrix.build-type == 'Release'
-      with:
-        prerelease: true
-        files: ${{ env.APPNAME }}.zip
-        tag_name: continuous
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - if: (startsWith(github.ref, 'refs/tags/')) && (matrix.build-type == 'Release')
-      name: tagged release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: ${{ env.APPNAME }}.zip
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
