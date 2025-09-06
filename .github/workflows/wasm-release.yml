@@ -39,7 +39,7 @@ jobs:
         fetch-depth: 0
 
     - name: Install Qt (Host)
-      uses: jurplel/install-qt-action@v3
+      uses: jurplel/install-qt-action@v4
       with:
         aqtversion: '==3.3.*'
         py7zrversion: '>=0.20.2'
@@ -52,7 +52,7 @@ jobs:
         modules: 'qtcharts'
 
     - name: Install Qt (Emscripten)
-      uses: jurplel/install-qt-action@v3
+      uses: jurplel/install-qt-action@v4
       with:
         aqtversion: '==3.3.*'
         py7zrversion: '>=0.20.2'
