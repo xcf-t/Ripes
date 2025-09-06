@@ -137,6 +137,10 @@ EditTab::EditTab(QToolBar *toolbar, QWidget *parent)
   m_ui->leftSpliiter->setStretchFactor(0, INT_MAX);
   m_ui->leftSpliiter->setStretchFactor(1, 0);
 
+  QList<int> l_sizes;
+  l_sizes << 1 << 0;
+  m_ui->leftSpliiter->setSizes(l_sizes);
+
   // make editor and program viewer stretch equally wrt. each other
   m_ui->editorSplitter->setStretchFactor(0, 2);
   m_ui->editorSplitter->setStretchFactor(1, 2);
