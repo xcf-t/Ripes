@@ -5,6 +5,8 @@
 #include <QResource>
 #include <QTimer>
 #include <iostream>
+#include <QPalette>
+#include <QStyleFactory>
 
 #include "src/cli/clioptions.h"
 #include "src/cli/clirunner.h"
@@ -55,6 +57,74 @@ CommandLineParseResult parseCommandLine(QCommandLineParser &parser,
   }
 }
 
+void printPaletteColors(const QPalette& palette) {
+    QList<QPalette::ColorRole> roles = {
+        QPalette::Window,
+        QPalette::WindowText,
+        QPalette::Base,
+        QPalette::AlternateBase,
+        QPalette::ToolTipBase,
+        QPalette::ToolTipText,
+        QPalette::Text,
+        QPalette::Button,
+        QPalette::ButtonText,
+        QPalette::BrightText,
+        QPalette::Highlight,
+        QPalette::HighlightedText,
+        QPalette::Link,
+        QPalette::LinkVisited,
+        QPalette::PlaceholderText
+    };
+
+    QStringList roleNames = {
+        "Window",
+        "WindowText",
+        "Base",
+        "AlternateBase",
+        "ToolTipBase",
+        "ToolTipText",
+        "Text",
+        "Button",
+        "ButtonText",
+        "BrightText",
+        "Highlight",
+        "HighlightedText",
+        "Link",
+        "LinkVisited",
+        "PlaceholderText"
+    };
+
+    for (int i = 0; i < roles.size(); ++i) {
+        QColor color = palette.color(QPalette::Active, roles[i]);
+        qDebug() << roleNames[i] << ": " << color.name();
+    }
+}
+
+void setForceDarkTheme(QApplication& app) {
+  printPaletteColors(app.palette());
+
+  QPalette darkPalette;
+
+  darkPalette.setColor(QPalette::Window, QColor("#202326"));
+  darkPalette.setColor(QPalette::WindowText, QColor("#fcfcfc"));
+  darkPalette.setColor(QPalette::Base, QColor("#141618"));
+  darkPalette.setColor(QPalette::AlternateBase, QColor("#1d1f22"));
+  darkPalette.setColor(QPalette::ToolTipBase, QColor("#292c30"));
+  darkPalette.setColor(QPalette::ToolTipText, QColor("#fcfcfc"));
+  darkPalette.setColor(QPalette::Text, QColor("#fcfcfc"));
+  darkPalette.setColor(QPalette::Button, QColor("#292c30"));
+  darkPalette.setColor(QPalette::ButtonText, QColor("#fcfcfc"));
+  darkPalette.setColor(QPalette::BrightText, QColor("#ffffff"));
+  darkPalette.setColor(QPalette::Highlight, QColor("#3daee9"));
+  darkPalette.setColor(QPalette::HighlightedText, QColor("#fcfcfc"));
+  darkPalette.setColor(QPalette::Link, QColor("#1d99f3"));
+  darkPalette.setColor(QPalette::LinkVisited, QColor("#9b59b6"));
+  darkPalette.setColor(QPalette::PlaceholderText, QColor("#a1a9b1"));
+
+  app.setStyle(QStyleFactory::create("Fusion"));
+  app.setPalette(darkPalette);
+}
+
 int guiMode(QApplication &app) {
   Ripes::MainWindow m;
 
@@ -71,6 +141,10 @@ int guiMode(QApplication &app) {
   m.showMaximized();
   m.setWindowState(Qt::WindowMaximized);
   QTimer::singleShot(100, &m, [&m] { m.fitToView(); });
+
+#ifdef Q_OS_WINDOWS
+  if (Ripes::Colors::isDarkTheme()) setForceDarkTheme(app);
+#endif
 
   return app.exec();
 }
