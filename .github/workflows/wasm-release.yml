@@ -41,28 +41,28 @@ jobs:
     - name: Install Qt (Host)
       uses: jurplel/install-qt-action@v3
       with:
-        aqtversion: '==3.1.*'
+        aqtversion: '==3.3.*'
         py7zrversion: '>=0.20.2'
-        version: '6.9.0'
+        version: '6.10.0'
         host: 'linux'
         target: 'desktop'
-        arch: 'gcc_64'
+        arch: 'linux_gcc_64'
         cache: 'true'
-        cache-key-prefix: 'install-qt-host-6.6.0'
+        cache-key-prefix: 'install-qt-host-6.10.0'
         modules: 'qtcharts'
 
     - name: Install Qt (Emscripten)
       uses: jurplel/install-qt-action@v3
       with:
-        aqtversion: '==3.1.*'
+        aqtversion: '==3.3.*'
         py7zrversion: '>=0.20.2'
-        version: '6.6.0'
-        host: 'linux'
-        target: 'desktop'
+        version: '6.10.0'
+        host: 'all_os'
+        target: 'wasm'
         arch: 'wasm_multithread'
         modules: 'qtcharts'
         cache: 'true'
-        cache-key-prefix: 'install-qt-emscripten-6.6.0'
+        cache-key-prefix: 'install-qt-emscripten-6.10.0'
 
     - name: install Emscripten
       run: |
