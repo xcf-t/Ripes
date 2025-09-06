@@ -34,6 +34,13 @@
 #include <QTemporaryFile>
 #include <QTextStream>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#include <emscripten/html5.h>
+#include <emscripten/val.h>
+#include <emscripten/bind.h>
+#endif
+
 namespace Ripes {
 
 static void clearSaveFile() {
@@ -428,6 +435,36 @@ static bool ensurePath(const QString &path) {
 }
 
 void MainWindow::saveFilesTriggered() {
+  QString text = static_cast<EditTab *>(m_tabWidgets.at(EditTabID).tab)->getAssemblyText();
+  char* text_data = text.toLocal8Bit().data();
+  std::string wsHint = "save.s";
+  std::wstring wsTmp(wsHint.begin(), wsHint.end());
+
+  #ifdef __EMSCRIPTEN__
+    val Blob = val::global("Blob");
+    val contentArray = val::array();
+    val content = val(typed_memory_view(text.length(), text_data));
+    contentArray.call<void>("push", content);
+    val type = val::object();
+    type.set("type","application/octet-stream");
+    val fileBlob = Blob.new_(contentArray, type);
+
+    // Create Blob download link
+    val document = val::global("document");
+    val link = document.call<val>("createElement", std::string("a"));
+    link.set("download", wsTmp);
+    val window = val::global("window");
+    val URL = window["URL"];
+    link.set("href", URL.call<val>("createObjectURL", fileBlob));
+    link.set("style", "display:none");
+
+    // Programatically click link
+    val body = document["body"];
+    body.call<void>("appendChild", link);
+    link.call<void>("click");
+    body.call<void>("removeChild", link);
+  #endif
+
   SaveDialog diag(
       static_cast<EditTab *>(m_tabWidgets.at(EditTabID).tab)->getSourceType());
   if (!RipesSettings::value(RIPES_SETTING_HAS_SAVEFILE).toBool()) {
@@ -472,14 +509,18 @@ void MainWindow::saveFilesTriggered() {
 }
 
 void MainWindow::saveFilesAsTriggered() {
-  SaveDialog diag(
-      static_cast<EditTab *>(m_tabWidgets.at(EditTabID).tab)->getSourceType());
-  auto ret = diag.exec();
-  if (ret == QDialog::Rejected) {
-    return;
-  }
-  RipesSettings::setValue(RIPES_SETTING_HAS_SAVEFILE, true);
-  saveFilesTriggered();
+  #ifdef __EMSCRIPTEN__
+
+  #else
+    SaveDialog diag(
+        static_cast<EditTab *>(m_tabWidgets.at(EditTabID).tab)->getSourceType());
+    auto ret = diag.exec();
+    if (ret == QDialog::Rejected) {
+      return;
+    }
+    RipesSettings::setValue(RIPES_SETTING_HAS_SAVEFILE, true);
+    saveFilesTriggered();
+  #endif
 }
 
 void MainWindow::settingsTriggered() {
