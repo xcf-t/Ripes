@@ -65,6 +65,41 @@ ProcessorSelectionDialog::ProcessorSelectionDialog(QWidget *parent)
                                          processorItem);
   }
 
+  const ProcInfoBase& cInfo = ProcessorRegistry::getDescription(ProcessorID::RV32_SS);
+  const ProcInfoBase& dInfo = ProcessorRegistry::getDescription(ProcessorID::RV32_5S);
+  QTreeWidgetItem *cProcessorItem = new QTreeWidgetItem({cInfo.name + " (32-bit)"});
+  QTreeWidgetItem *dProcessorItem = new QTreeWidgetItem({dInfo.name + " (32-bit)"});
+  cProcessorItem->setData(ProcessorColumn, Qt::UserRole, QVariant::fromValue(cInfo.id));
+  dProcessorItem->setData(ProcessorColumn, Qt::UserRole, QVariant::fromValue(dInfo.id));
+
+  if (cInfo.id == ProcessorHandler::getID()) {
+    // Highlight if currently selected processor
+    auto font = cProcessorItem->font(ProcessorColumn);
+    font.setBold(true);
+    cProcessorItem->setFont(ProcessorColumn, font);
+    selectedItem = cProcessorItem;
+  } else if (dInfo.id == ProcessorHandler::getID()) {
+    // Highlight if currently selected processor
+    auto font = dProcessorItem->font(ProcessorColumn);
+    font.setBold(true);
+    dProcessorItem->setFont(ProcessorColumn, font);
+    selectedItem = dProcessorItem;
+  }
+
+  const QString &cIsaFamily = ISAFamilyNames.at(cInfo.isaInfo().isa->isaID());
+
+  auto *cCatItem = new QTreeWidgetItem(
+      {QString("Lecture Relevant")});
+
+  QTreeWidgetItem *cFamilyItem = isaFamilyItems.at(cIsaFamily);
+  cFamilyItem->insertChild(0, cCatItem);
+
+  cCatItem->insertChild(0, cProcessorItem);
+  cCatItem->insertChild(1, dProcessorItem);
+
+  
+  
+
   connect(m_ui->processors, &QTreeWidget::currentItemChanged, this,
           &ProcessorSelectionDialog::selectionChanged);
   connect(m_ui->processors, &QTreeWidget::itemDoubleClicked, this,
