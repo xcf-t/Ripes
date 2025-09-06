@@ -1,4 +1,4 @@
-name: Windows / Qt 6.9.0
+name: Windows / Qt 6.10.0
 
 on: workflow_dispatch
 
@@ -18,9 +18,9 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
-        aqtversion: '==3.1.*'
+        aqtversion: '==3.3.*'
         py7zrversion: '>=0.20.2'
-        version: '6.9.0'
+        version: '6.10.0'
         host: 'windows'
         target: 'desktop'
         arch: 'win64_msvc2022_64'
@@ -56,21 +56,3 @@ jobs:
       with:
         name: ${{ matrix.build-type }}_executable
         path: ${{ env.APPNAME }}
-
-    - name: continuous release
-      uses: softprops/action-gh-release@v1
-      if: github.ref == 'refs/heads/master' && matrix.build-type == 'Release'
-      with:
-        prerelease: true
-        files: ${{ env.APPNAME }}
-        tag_name: continuous
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - if: (startsWith(github.ref, 'refs/tags/')) && (matrix.build-type == 'Release')
-      name: tagged release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: ${{ env.APPNAME }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
