@@ -11,6 +11,7 @@
 #include "src/cli/clioptions.h"
 #include "src/cli/clirunner.h"
 #include "src/mainwindow.h"
+#include "colors.h"
 
 using namespace std;
 
@@ -143,7 +144,7 @@ int guiMode(QApplication &app) {
   QTimer::singleShot(100, &m, [&m] { m.fitToView(); });
 
 #ifdef Q_OS_WINDOWS
-  if (Ripes::Colors::isDarkTheme()) setForceDarkTheme(app);
+  if (QSysInfo::productVersion() == "10" && Ripes::Colors::isDarkTheme()) setForceDarkTheme(app);
 #endif
 
   return app.exec();
