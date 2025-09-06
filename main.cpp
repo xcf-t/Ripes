@@ -58,52 +58,7 @@ CommandLineParseResult parseCommandLine(QCommandLineParser &parser,
   }
 }
 
-void printPaletteColors(const QPalette& palette) {
-    QList<QPalette::ColorRole> roles = {
-        QPalette::Window,
-        QPalette::WindowText,
-        QPalette::Base,
-        QPalette::AlternateBase,
-        QPalette::ToolTipBase,
-        QPalette::ToolTipText,
-        QPalette::Text,
-        QPalette::Button,
-        QPalette::ButtonText,
-        QPalette::BrightText,
-        QPalette::Highlight,
-        QPalette::HighlightedText,
-        QPalette::Link,
-        QPalette::LinkVisited,
-        QPalette::PlaceholderText
-    };
-
-    QStringList roleNames = {
-        "Window",
-        "WindowText",
-        "Base",
-        "AlternateBase",
-        "ToolTipBase",
-        "ToolTipText",
-        "Text",
-        "Button",
-        "ButtonText",
-        "BrightText",
-        "Highlight",
-        "HighlightedText",
-        "Link",
-        "LinkVisited",
-        "PlaceholderText"
-    };
-
-    for (int i = 0; i < roles.size(); ++i) {
-        QColor color = palette.color(QPalette::Active, roles[i]);
-        qDebug() << roleNames[i] << ": " << color.name();
-    }
-}
-
 void setForceDarkTheme(QApplication& app) {
-  printPaletteColors(app.palette());
-
   QPalette darkPalette;
 
   darkPalette.setColor(QPalette::Window, QColor("#202326"));
