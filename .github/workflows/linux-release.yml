@@ -1,8 +1,6 @@
-name: Ubuntu 22.04 / Qt 6.5.0
-on:
-  workflow_run:
-    workflows: ["Release setup"]
-    types: [completed]
+name: Ubuntu 22.04 / Qt 6.10.0
+
+on: workflow_dispatch
 
 jobs:
   buildUbuntu:
@@ -10,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        build-type: [Release, Debug]
+        build-type: [Release]
 
     steps:
 
@@ -36,12 +34,12 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
-        aqtversion: '==3.1.*'
+        aqtversion: '==3.3.*'
         py7zrversion: '>=0.20.2'
-        version: '6.5.0'
+        version: '6.10.0'
         host: 'linux'
         target: 'desktop'
-        arch: 'gcc_64'
+        arch: 'linux_gcc_64'
         modules: 'qtcharts'
 
     - name: checkout sources
@@ -73,21 +71,3 @@ jobs:
       with:
         name: ${{ matrix.build-type }}_executable
         path: Ripes*.AppImage*
-
-    - name: continuous release
-      uses: softprops/action-gh-release@v1
-      if: github.ref == 'refs/heads/master' && matrix.build-type == 'Release'
-      with:
-        prerelease: true
-        files: Ripes*.AppImage*
-        tag_name: continuous
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - if: (startsWith(github.ref, 'refs/tags/')) && (matrix.build-type == 'Release')
-      name: tagged release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: Ripes*.AppImage*
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
