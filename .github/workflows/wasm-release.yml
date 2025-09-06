@@ -68,8 +68,8 @@ jobs:
       run: |
         git clone https://github.com/emscripten-core/emsdk.git
         cd emsdk
-        ./emsdk install latest 3.1.25
-        ./emsdk activate 3.1.25
+        ./emsdk install latest 4.0.7
+        ./emsdk activate 4.0.7
 
     - name: build Ripes
       run: |
