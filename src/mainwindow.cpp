@@ -379,7 +379,7 @@ void MainWindow::version() {
   QVBoxLayout layout;
   QLabel imageLabel;
   QLabel textLabel("Custom Ripes build by the Computer Architecture team @ RUB");
-  QLabel versionLabel("Ripes version: " + getRipesVersion());
+  QLabel versionLabel("Ripes version: WS25/26-v1");
   QPushButton okButton("OK");
   
   QPixmap pixmap;
